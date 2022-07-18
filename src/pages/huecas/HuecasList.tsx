@@ -1,4 +1,4 @@
-import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonLabel, IonList, IonMenuButton, IonPage, IonRow, IonThumbnail, IonTitle, IonToolbar } from '@ionic/react';
 import { add, close, pencil } from 'ionicons/icons';
 import { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
@@ -48,6 +48,10 @@ const HuecasList: React.FC = () => {
     history.push('/admin/huecas/' + id);
   }
 
+  const abrirMapa=(latitud: string, longitud: string)=>{
+    window.open('https://www.openstreetmap.org/#map=14/'+latitud+'/'+longitud);
+  }
+
   return (
     <IonPage>
       <IonHeader>
@@ -69,7 +73,7 @@ const HuecasList: React.FC = () => {
 
     <IonContent>
         <IonCard>
-            <IonTitle> Gestión de huecas turísticos</IonTitle>
+            <IonTitle> Gestión de huecas </IonTitle>
             <IonItem>
                 <IonButton onClick={addHueca} color="primary" fill="solid" slot='end' size="default">
                     <IonIcon icon={add} />
@@ -81,9 +85,9 @@ const HuecasList: React.FC = () => {
                 <IonCol>Nombre</IonCol>
                 <IonCol>Ubicación</IonCol>
                 <IonCol>Servicios</IonCol>
-                <IonCol>Costo de entrada</IonCol>
-                <IonCol>Horarios</IonCol>
-                <IonCol>Telefono</IonCol>
+                <IonCol>Costo</IonCol>
+                <IonCol>Latitud</IonCol>
+                <IonCol>Longitud</IonCol>
                 <IonCol>Acciones</IonCol>
             </IonRow>
             {huecas.map((hueca: Hueca) =>
@@ -92,8 +96,8 @@ const HuecasList: React.FC = () => {
                     <IonCol>{hueca.ubicacion}</IonCol>
                     <IonCol>{hueca.servicios}</IonCol>
                     <IonCol>{hueca.costo}</IonCol>
-                    <IonCol>{hueca.horarios}</IonCol>
-                    <IonCol>{hueca.telefono}</IonCol>
+                    <IonCol>{hueca.latitud}</IonCol>
+                    <IonCol>{hueca.longitud}</IonCol>
                     <IonCol>
                         <IonButton onClick={() => editHueca(String(hueca.id))} color="primary" fill="clear">
                             <IonIcon icon={pencil} slot="icon-only"/>
@@ -108,6 +112,19 @@ const HuecasList: React.FC = () => {
             
         </IonGrid>
         </IonCard>
+
+        <IonList>
+          {huecas.map((aver: Hueca) => (
+            <IonItem onClick={() => abrirMapa(String(aver.latitud), String(aver.longitud))
+            }>
+              <IonThumbnail slot="start">
+                <IonImg  src='https://vinomanos.com/wp-content/uploads/2019/07/huevo-frito1.jpg' />
+              </IonThumbnail>
+              <IonLabel>{aver.nombre} Ubicado en: {aver.ubicacion}</IonLabel>
+              <IonLabel>Mapa</IonLabel>
+            </IonItem>
+            ))}
+        </IonList> 
 
     </IonContent>
 

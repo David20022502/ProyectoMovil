@@ -1,13 +1,15 @@
 import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonInput, IonItem, IonLabel, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { add, checkmark, close, pencil, text } from 'ionicons/icons';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
+import HomeContext from '../../context/HomeContext';
 import Iglesia from './Iglesia';
 import { removeIglesia, saveIglesia, searchIglesia, searchIglesiaById } from './IglesiasApi';
 
 
 const IglesiasEdit: React.FC = () => {
+  const{isChangindDataH,handleChangeDataH}:any=useContext(HomeContext);
 
   const { name, id } = useParams<{ name: string; id: string }>();
   const [iglesia, setIglesia] = useState<Iglesia>({});/*inicializacion a un array vacio*/
@@ -16,19 +18,28 @@ const IglesiasEdit: React.FC = () => {
 
   useEffect(() =>{
     search();
-  }, []); /* los [] son componentes como clientes que si reciben modificacion se ejecutan o una sola vez cuando se cargue por 1ra vez */
+    console.log("para ver cambia isChangindData",isChangindDataH)
+    if(isChangindDataH){
+      handleChangeDataH(false);
+    }
+  }, [isChangindDataH]); /* los [] son componentes como clientes que si reciben modificacion se ejecutan o una sola vez cuando se cargue por 1ra vez */
 
 
-  const search = () => {
+  const search = async () => {
     if(id !== 'new'){
-        let result = searchIglesiaById(id);
+        let result = await searchIglesiaById(id);
         setIglesia(result);
     }
   }
+  const refresh=()=>{
+    console.log("ya cambia dentro y refresca")
+
+    handleChangeDataH(true);
+  }
 
   const save = () => {
-    saveIglesia(iglesia);
-    history.push('/page/iglesias')
+    saveIglesia(iglesia, refresh);
+    history.push('/admin/iglesias')
   }
 
   
@@ -90,16 +101,16 @@ const IglesiasEdit: React.FC = () => {
             <IonRow>
                 <IonCol>
                     <IonItem>
-                        <IonLabel position="stacked">Horarios</IonLabel>
-                        <IonInput onIonChange={e => iglesia.horarios = String(e.detail.value)} 
-                            value={iglesia.horarios}> </IonInput>
+                        <IonLabel position="stacked">Latitud</IonLabel>
+                        <IonInput onIonChange={e => iglesia.latitud = String(e.detail.value)} 
+                            value={iglesia.latitud}> </IonInput>
                     </IonItem>
                 </IonCol>
                 <IonCol>
                     <IonItem>
-                        <IonLabel position="stacked">Telefono</IonLabel>
-                        <IonInput onIonChange={e => iglesia.telefono = String(e.detail.value)} 
-                            value={iglesia.telefono}> </IonInput>
+                        <IonLabel position="stacked">Longitud</IonLabel>
+                        <IonInput onIonChange={e => iglesia.longitud = String(e.detail.value)} 
+                            value={iglesia.longitud}> </IonInput>
                     </IonItem>
                 </IonCol>
             </IonRow>

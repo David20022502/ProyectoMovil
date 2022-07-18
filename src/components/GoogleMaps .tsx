@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+/*import { Injectable } from '@angular/core';
 import { Geolocation } from '@ionic-native/geolocation';
 
 declare var google:any;
@@ -36,7 +36,7 @@ export class GoogleMaps {
         if (this.apiKey) {
           script.src = 'http://maps.google.com/maps/api/js?key=&#39; + this.apiKey + '&callback=mapInit';
         } else {
-          script.src = 'http://maps.google.com/maps/api/js?callback=mapInit&#39;;
+          script.src = 'http://maps.google.com/maps/api/js?callback=mapInit&#39';
         }
 
         document.body.appendChild(script);
@@ -48,7 +48,7 @@ export class GoogleMaps {
 
   initMap(): Promise<any> {
     return new Promise((resolve) => {
-      this.geolocation.getCurrentPosition().then((position) => {
+      this.geolocation.getCurrentPosition().then((position:any) => {
         let center = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
         let mapOptions = {
@@ -58,7 +58,7 @@ export class GoogleMaps {
         }
 
         this.map = new google.maps.Map(this.mapElement, mapOptions);
-        this.map.addListener('click', e => {
+        this.map.addListener('click', (e:any) => {
           this.map.panTo(e.latLng);
 
           if (this.marker == undefined) {
@@ -79,3 +79,4 @@ export class GoogleMaps {
     });
   }
 }
+*/export{}

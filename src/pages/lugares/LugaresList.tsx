@@ -1,9 +1,10 @@
-import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonMenuButton, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCard, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonLabel, IonList, IonMenuButton, IonPage, IonRow, IonThumbnail, IonTitle, IonToolbar } from '@ionic/react';
 import { add, close, pencil } from 'ionicons/icons';
 import { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 import HomeContext from '../../context/HomeContext';
+import Lugar from './Lugar';
 import { removeLugar, saveLugar, searchLugar } from './lugaresApi';
 
 
@@ -39,24 +40,15 @@ const LugaresList: React.FC= () => {
     search();
   }
 
-  const pruebaLocalStorage = () => {
-    const datosDeEjemplo = 
-        {
-            id: '1',
-            nombre: 'Montañita',
-            ubicacion: 'entre tal y tal',
-            servicios: 'Entretenimiento, piscina, etc',
-            costo: '12.35',
-            horarios: 'todo el dia :v',
-            telefono: '1234567'
-        }
-    saveLugar(datosDeEjemplo,refresh);
-  }
   const addLugar = () =>{
     history.push('/admin/lugares/new');
   }
   const editLugar = (id: string) =>{
     history.push('/admin/lugares/' + id);
+  }
+
+  const abrirMapa=(latitud: string, longitud: string)=>{
+    window.open('https://www.openstreetmap.org/#map=14/'+latitud+'/'+longitud);
   }
 
   return (
@@ -92,37 +84,47 @@ const LugaresList: React.FC= () => {
                 <IonCol>Nombre</IonCol>
                 <IonCol>Ubicación</IonCol>
                 <IonCol>Servicios</IonCol>
-                <IonCol>Costo de entrada</IonCol>
-                <IonCol>Horarios</IonCol>
-                <IonCol>Telefono</IonCol>
+                <IonCol>Costo</IonCol>
+                <IonCol>Latitud</IonCol>
+                <IonCol>Longitud</IonCol>
                 <IonCol>Acciones</IonCol>
             </IonRow>
-            {lugares.map((lugar:any) =>
+            {lugares.map((lugar:Lugar) =>
                 <IonRow>
                     <IonCol>{lugar.nombre}</IonCol>
                     <IonCol>{lugar.ubicacion}</IonCol>
                     <IonCol>{lugar.servicios}</IonCol>
                     <IonCol>{lugar.costo}</IonCol>
-                    <IonCol>{lugar.horarios}</IonCol>
-                    <IonCol>{lugar.telefono}</IonCol>
+                    <IonCol>{lugar.latitud}</IonCol>
+                    <IonCol>{lugar.longitud}</IonCol>
                     <IonCol>
-                        <IonButton onClick={() => editLugar(lugar.id)} color="primary" fill="clear">
+                        <IonButton onClick={() => editLugar(String(lugar.id))} color="primary" fill="clear">
                             <IonIcon icon={pencil} slot="icon-only"/>
                         </IonButton>
                         <IonButton color="danger" fill="clear"
-                        onClick={()=> remove(lugar.id)}>
+                        onClick={()=> remove(String(lugar.id))}>
                             <IonIcon icon={close} slot="icon-only"/>
                         </IonButton>
                     </IonCol>
-                </IonRow>            
+                </IonRow>             
             )}
             
         </IonGrid>
         </IonCard>
 
-        <IonButton onClick={pruebaLocalStorage} color='danger' fill='clear'>
-            prueba Local Storage
-        </IonButton>
+        <IonList>
+          {lugares.map((aver: Lugar) => (
+            <IonItem onClick={() => abrirMapa(String(aver.latitud), String(aver.longitud))
+            }>
+              <IonThumbnail slot="start">
+                <IonImg  src='https://img.goraymi.com/2019/03/13/c29fba1d7d275ccfbafdd152d8c835cf_lg.jpg' />
+              </IonThumbnail>
+              <IonLabel>{aver.nombre} Ubicado en: {aver.ubicacion}</IonLabel>
+              <IonLabel>Mapa</IonLabel>
+            </IonItem>
+            ))}
+        </IonList> 
+
     </IonContent>
 
 

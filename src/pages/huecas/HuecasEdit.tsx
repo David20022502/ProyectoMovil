@@ -101,16 +101,16 @@ const HuecasEdit: React.FC = () => {
             <IonRow>
                 <IonCol>
                     <IonItem>
-                        <IonLabel position="stacked">Horarios</IonLabel>
-                        <IonInput onIonChange={e => hueca.horarios = String(e.detail.value)} 
-                            value={hueca.horarios}> </IonInput>
+                        <IonLabel position="stacked">Latitud</IonLabel>
+                        <IonInput onIonChange={e => hueca.latitud = String(e.detail.value)} 
+                            value={hueca.latitud}> </IonInput>
                     </IonItem>
                 </IonCol>
                 <IonCol>
                     <IonItem>
-                        <IonLabel position="stacked">Telefono</IonLabel>
-                        <IonInput onIonChange={e => hueca.telefono = String(e.detail.value)} 
-                            value={hueca.telefono}> </IonInput>
+                        <IonLabel position="stacked">Longitud</IonLabel>
+                        <IonInput onIonChange={e => hueca.longitud = String(e.detail.value)} 
+                            value={hueca.longitud}> </IonInput>
                     </IonItem>
                 </IonCol>
             </IonRow>

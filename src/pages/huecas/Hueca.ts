@@ -5,7 +5,7 @@ export default interface Hueca{
     ubicacion?: string,
     servicios?: string,
     costo?: string,
-    horarios?: string,
-    telefono?: string
+    latitud?: string,
+    longitud?: string
     
 }

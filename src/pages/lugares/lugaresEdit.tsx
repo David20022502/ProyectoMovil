@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import ExploreContainer from '../../components/ExploreContainer';
 import HomeContext from '../../context/HomeContext';
+import Lugar from './Lugar';
 import { removeLugar, saveLugar, searchLugar, searchLugarById } from './lugaresApi';
 
 
@@ -11,7 +12,7 @@ const LugaresEdit: React.FC = () => {
   const{isChangindData,handleChangeData}:any=useContext(HomeContext);
 
   const { name, id } = useParams<{ name: string; id: string }>();
-  const [lugar, setLugar] = useState<any>({});/*inicializacion a un array vacio*/
+  const [lugar, setLugar] = useState<Lugar>({});/*inicializacion a un array vacio*/
   const history = useHistory();
 
 
@@ -62,20 +63,20 @@ const LugaresEdit: React.FC = () => {
         </IonHeader>
 
     <IonContent>
-        <IonCard>
+    <IonCard>
             <IonTitle>{id === 'new' ? 'Agregar Sitio Turistico' : 'Editar Datos'}</IonTitle>
             <IonRow>
                 <IonCol>                       
                     <IonItem>
                         <IonLabel position="stacked">Nombre</IonLabel>
-                        <IonInput onIonChange={e => lugar.nombre = e.detail.value} 
+                        <IonInput onIonChange={e => lugar.nombre = String(e.detail.value)} 
                             value={lugar.nombre}> </IonInput>
                     </IonItem>
                 </IonCol>
                 <IonCol>
                     <IonItem>
                         <IonLabel position="stacked">Ubicación</IonLabel>
-                        <IonInput onIonChange={e => lugar.ubicacion = e.detail.value} 
+                        <IonInput onIonChange={e => lugar.ubicacion = String(e.detail.value)} 
                             value={lugar.ubicacion}> </IonInput>
                     </IonItem>
                 </IonCol>
@@ -84,14 +85,14 @@ const LugaresEdit: React.FC = () => {
                 <IonCol>
                     <IonItem>
                         <IonLabel position="stacked">Servicios</IonLabel>
-                        <IonInput onIonChange={e => lugar.servicios = e.detail.value} 
+                        <IonInput onIonChange={e => lugar.servicios = String(e.detail.value)} 
                             value={lugar.servicios}> </IonInput>
                     </IonItem>
                 </IonCol>
                 <IonCol>
                     <IonItem>
                         <IonLabel position="stacked">Costo</IonLabel>
-                        <IonInput onIonChange={e => lugar.costo = e.detail.value} 
+                        <IonInput onIonChange={e => lugar.costo = String(e.detail.value)} 
                             value={lugar.costo}> </IonInput>
                     </IonItem>
                 </IonCol>
@@ -99,16 +100,16 @@ const LugaresEdit: React.FC = () => {
             <IonRow>
                 <IonCol>
                     <IonItem>
-                        <IonLabel position="stacked">Horarios</IonLabel>
-                        <IonInput onIonChange={e => lugar.horarios = e.detail.value} 
-                            value={lugar.horarios}> </IonInput>
+                        <IonLabel position="stacked">Latitud</IonLabel>
+                        <IonInput onIonChange={e => lugar.latitud = String(e.detail.value)} 
+                            value={lugar.latitud}> </IonInput>
                     </IonItem>
                 </IonCol>
                 <IonCol>
                     <IonItem>
-                        <IonLabel position="stacked">Telefono</IonLabel>
-                        <IonInput onIonChange={e => lugar.telefono = e.detail.value} 
-                            value={lugar.telefono}> </IonInput>
+                        <IonLabel position="stacked">Longitud</IonLabel>
+                        <IonInput onIonChange={e => lugar.longitud = String(e.detail.value)} 
+                            value={lugar.longitud}> </IonInput>
                     </IonItem>
                 </IonCol>
             </IonRow>
@@ -129,6 +130,7 @@ const LugaresEdit: React.FC = () => {
 
 
         </IonCard>
+        
 
     </IonContent>
 
