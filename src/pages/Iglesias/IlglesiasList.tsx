@@ -12,7 +12,7 @@ const IglesiasList: React.FC = () => {
   const{isChangindDataH,handleChangeDataH,handlePageSatus}:any=useContext(HomeContext);
 
   const { name } = useParams<{ name: string; }>();
-  const [iglesias, setIglesias] = useState<Iglesia[]>([]);/*inicializacion a un array vacio*/
+  const [iglesias, setIglesias] = useState<Iglesia[]>([]);
   const history = useHistory();
 
   useEffect(() =>{
